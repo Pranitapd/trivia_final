@@ -54,7 +54,7 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 
 ## API Reference
 
-- Base URL: Right now the appisrunning locally. After doing 'npm start'in the frontend code the app will be osted by default on http://127.0.0.1:5000/ i.e localhost.
+- Base URL: Right now the appisrunning locally. After doing 'npm start'in the frontend code the app will be osted by default on http://127.0.0.1:5000/.
 - Authentication: No authentication is required for running the site at present.
 - You need to run both backend(using Flask run) and frontend for site to work.
 - If website does not open correctly in browser you need to disable security from your chrome window. Open Run and type- chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security . Hit enter. open your localhost here.
