@@ -275,6 +275,94 @@ Errors handled are of following types:-
   "total_questions": 18
 }
 
+- Sample: curl http://127.0.0.1:5000/categories/1/questions
+- Output:
+{
+  "current_category": "Science",
+  "questions": [
+    {
+      "answer": "The Liver",
+      "category": 1,
+      "difficulty": 4,
+      "id": 20,
+      "question": "What is the heaviest organ in the human body?"
+    },
+    {
+      "answer": "Alexander Fleming",
+      "category": 1,
+      "difficulty": 3,
+      "id": 21,
+      "question": "Who discovered penicillin?"
+    },
+    {
+      "answer": "Blood",
+      "category": 1,
+      "difficulty": 4,
+      "id": 22,
+      "question": "Hematology is a branch of medicine involving the study of what?"
+    },
+    {
+      "answer": "human",
+      "category": 1,
+      "difficulty": 1,
+      "id": 28,
+      "question": "who am I"
+    },
+    {
+      "answer": "Pogol",
+      "category": 1,
+      "difficulty": 1,
+      "id": 30,
+      "question": "who am I"
+    },
+    {
+      "answer": "Pogol",
+      "category": 1,
+      "difficulty": 1,
+      "id": 31,
+      "question": "who is Sanket"
+    }
+  ],
+  "success": true,
+  "total_questions": 20
+}
+
+- Sample: curl -X POST -H "Content-Type:application/json" -d "{\"searchTerm\":\"Tom\"}" http://127.0.0.1:5000/questions/search
+- Output: 
+{
+  "current_category": null,
+  "questions": [
+    {
+      "answer": "Apollo 13",
+      "category": 5,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    }
+  ],
+  "success": true,
+  "total_questions": 20
+}
+
+- Sample: curl -X POST -H "Content-Type:application/json" -d "{\"question\":\"Is this a question\" , \"answer\":\"yes\", \"difficulty\":\"4\",\"category\":1}" http://127.0.0.1:5000/questions/
+- Output:
+{
+  "success": true
+}
+
+- Sample: curl -X POST -H "Content-Type:application/json" -d "{\"previous_questions\":[10,11,12],\"quiz_category\":{\"id\":1,\"type\":\"Science\"}}" http://127.0.0.1:5000/quizzes
+- Output:
+{
+  "question": {
+    "answer": "The Liver",
+    "category": 1,
+    "difficulty": 4,
+    "id": 20,
+    "question": "What is the heaviest organ in the human body?"
+  },
+  "success": true
+}
+
 ## Testing
 To run the tests, run
 ```
