@@ -23,6 +23,12 @@ def create_app(test_config=None):
         current_questions = questions[start:end]
         return current_questions
 
+    def get_current_categories(all_questions):
+        categories= []
+        for ques in all_questions:
+            if ques.category not in categories:
+               categories.append(ques.category)
+        return categories
 
     @app.after_request
     def after_request(response):
@@ -60,7 +66,7 @@ def create_app(test_config=None):
         'questions':current_questions,
         'total_questions':len(all_questions),
         'categories':get_category_list(),
-        'current_category':None
+        'current_category':get_current_categories(all_questions)
         })
 
     @app.route('/questions/<int:question_id>',methods=['DELETE'])
@@ -79,7 +85,7 @@ def create_app(test_config=None):
             'questions': current_question,
             'total_questions':len(Question.query.all()),
             'categories':get_category_list(),
-            'current_category':None
+            'current_category':get_current_categories(all_questions)
         })
   
     @app.route('/questions',methods=['POST'])
@@ -118,7 +124,7 @@ def create_app(test_config=None):
                 'success':True,
                 'questions': questions,
                 'total_questions':len(Question.query.all()),
-                'current_category':None  
+                'current_category':get_current_categories(searched_question)  
             })
         except:
             abort(404)
