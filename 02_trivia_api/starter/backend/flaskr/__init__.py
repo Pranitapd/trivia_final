@@ -46,6 +46,8 @@ def create_app(test_config=None):
 
     @app.route('/categories')
     def get_categories():
+        if(get_category_list):
+            abort(404)
         return jsonify({
             'success': True,
             'categories':get_category_list(),
@@ -157,6 +159,12 @@ def create_app(test_config=None):
         visited=[]
         for a in all_questions:
             all_question_ids.append(a.id)
+
+        if len(all_question_ids) == len(previous_questions):
+            return jsonify({
+                'success':True,
+                'question':False
+            })
 
         if previous_questions is None:
             random_question_id = random.choice(all_question_ids)
