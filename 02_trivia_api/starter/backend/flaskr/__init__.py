@@ -46,7 +46,7 @@ def create_app(test_config=None):
 
     @app.route('/categories')
     def get_categories():
-        if(get_category_list):
+        if(not get_category_list):
             abort(404)
         return jsonify({
             'success': True,
@@ -114,22 +114,24 @@ def create_app(test_config=None):
 
     @app.route('/questions/search',methods=['POST',"GET"])
     def search_questions():
-        try:
-            head = request.get_json()
-            search_term = head['searchTerm']
-            print(search_term)
-            searched_question = Question.query.filter(Question.question.ilike("%{}%".format(search_term))).all()
+        
+        head = request.get_json()
+        search_term = head['searchTerm']
+        print(search_term)
+        searched_question = Question.query.filter(Question.question.ilike("%{}%".format(search_term))).all()
 
-            questions = paginate(request,searched_question)
+        questions = paginate(request,searched_question)
 
-            return jsonify({
-                'success':True,
-                'questions': questions,
-                'total_questions':len(Question.query.all()),
-                'current_category':get_current_categories(searched_question)  
-            })
-        except:
+        if (len(questions) == 0):
             abort(404)
+            
+        return jsonify({
+            'success':True,
+            'questions': questions,
+            'total_questions':len(Question.query.all()),
+            'current_category':get_current_categories(searched_question)  
+        })
+    
 
 
     @app.route('/categories/<int:category_id>/questions')
@@ -147,13 +149,17 @@ def create_app(test_config=None):
         except:
             abort(404)
 
+
     @app.route('/quizzes',methods=['POST','GET'])
     def get_random_questions():
         head = request.get_json()
         previous_questions = head['previous_questions']
         quiz_category = head['quiz_category']['id']
 
-        all_questions = Question.query.filter(Question.category == quiz_category).all()
+        if (quiz_category == 0):
+            all_questions = Question.query.all()
+        else:
+            all_questions = Question.query.filter(Question.category == quiz_category).all()
 
         all_question_ids=[]
         visited=[]
